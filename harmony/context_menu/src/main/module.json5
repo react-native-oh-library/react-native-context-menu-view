@@ -1,0 +1,7 @@
+{
+  module: {
+    name: "context_menu",
+    type: 'har',
+    deviceTypes: ['default'],
+  },
+}

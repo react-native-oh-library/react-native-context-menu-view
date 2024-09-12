@@ -1,30 +1,40 @@
 {
-  "name": "react-native-context-menu-view",
-  "title": "React Native Context Menu View",
-  "version": "1.16.0",
+  "name": "@react-native-oh-tpl/react-native-context-menu-view",
+  "version": "1.16.0-0.0.1",
   "description": "Use native context menu views from React Native",
   "main": "index.js",
   "types": "index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mpiannucci/react-native-context-menu-view.git",
-    "baseUrl": "https://github.com/mpiannucci/react-native-context-menu-view"
-  },
-  "keywords": [
-    "react-native"
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "harmony",
+    "react-native-context-menu-view.podspec",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
   ],
-  "author": {
-    "name": "Matthew Iannucci",
-    "email": "mpiannucci@gmail.com"
-  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "harmony"
+  ],
+  "repository": "https://github.com/<your_github_handle>/rtn-centered-text",
+  "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
   "license": "MIT",
-  "licenseFilename": "LICENSE",
-  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/<your_github_handle>/rtn-centered-text/issues"
+  },
+  "homepage": "https://github.com/<your_github_handle>/rtn-centered-text#readme",
+  "devDependencies": {},
   "peerDependencies": {
-    "react": "^16.8.1 || ^17.0.0 || ^18.0.0",
-    "react-native": ">=0.60.0-rc.0 <1.0.x"
+    "react": "*",
+    "react-native": "*"
+  },
+  "harmony": {
+    "alias": "react-native-context-menu-view"
   }
 }

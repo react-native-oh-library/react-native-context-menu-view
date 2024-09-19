@@ -25,12 +25,20 @@ import { TurboModule, TurboModuleContext } from "@rnoh/react-native-openharmony/
 import { ComponentContent, window } from '@kit.ArkUI';
 import { ContextMenuLongPress } from './ContextMenuLongPress';
 import { RNOHContext } from '@rnoh/react-native-openharmony';
+import { ContextMenuLongPressWithNoSelect } from './ContextMenuLongPressWithNoSelect';
 
 @Builder
 //offset的单位是vp，传递的x，y值也对应的是组件里面的xy值,单点的特效
 function buildContextMenu(realViewPoint: ESObject) {
   ContextMenuLongPress({ realViewPoint: realViewPoint })
 }
+
+@Builder
+//不带Select属性或者Select属性为false
+function buildContextMenuWithNoSelect(realViewPoint: ESObject) {
+  ContextMenuLongPressWithNoSelect({ realViewPoint: realViewPoint })
+}
+
 
 export interface ContextMenuProps {
   tag?: number;
@@ -88,6 +96,9 @@ export class ContextMenuTurboModule extends TurboModule {
   windowX: number = 0;
   windowY: number = 0;
   customDialogOpen: boolean = false;
+  selectedActions: ESObject ={};
+  selectedFlag: number = 0;
+  menuHeight:number = 0;
 
   constructor(ctx: TurboModuleContext) {
     super(ctx)
@@ -128,10 +139,31 @@ export class ContextMenuTurboModule extends TurboModule {
               this.realViewPoint.windowY = e.touchPoints[0].windowY;
               this.windowY = e.touchPoints[0].windowY;
               this.realViewPoint.touchViewActions = e.touchViewActions;
-              //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
+              this.selectedActions = e.touchViewActions;
               if (!this.longPressLock) {
                 this.realViewPoint.ctx = this.ctx;
-                this.onTouch(this.realViewPoint);
+                for (let i = 0; i <  this.selectedActions.length; i++) {
+                  if (this.selectedActions[i].selected) {
+                    //复选框，默认为false
+                    this.selectedFlag++;
+                  }
+                  this.menuHeight++;
+                }
+                if (this.menuHeight >=5) {
+                  this.menuHeight = this.menuHeight - 5;
+                }  else {
+                  this.menuHeight = 0;
+                }
+                if (this.selectedFlag > 0) {
+                  //传入对应的ctx
+                  this.realViewPoint.ctx = this.ctx;
+                  this.onTouch(this.realViewPoint);
+                }  else {
+                  //传入对应的ctx
+                  this.realViewPoint.ctx = this.ctx;
+                  //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
+                  this.onTouchWithNoSelect(this.realViewPoint);
+                }
                 this.longPressLock = true;
               }
             }
@@ -190,9 +222,10 @@ export class ContextMenuTurboModule extends TurboModule {
           promptAction?.openCustomDialog(contentNode, {
             offset: {
               dx: -this.romWidth / 2 + this.windowX + this.width / 2,
-              dy: -this.romHeight / 2 + this.windowY + this.height * 0.4,
+              dy: -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48*this.menuHeight,
             }
           })
+          this.menuHeight = 0;
           this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
             promptAction?.closeCustomDialog(contentNode);
           })
@@ -201,4 +234,30 @@ export class ContextMenuTurboModule extends TurboModule {
         }
       })
   }
+
+  onTouchWithNoSelect(realViewPoint: Object) {
+    window.getLastWindow(this.ctx.uiAbilityContext)
+      .then((value) => {
+        const uiContext = value.getUIContext()
+        const promptAction = uiContext?.getPromptAction();
+        const contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenuWithNoSelect), realViewPoint);
+        try {
+          promptAction?.openCustomDialog(contentNode, {
+            offset: {
+              dx: -this.romWidth / 2 + this.windowX + this.width / 2,
+              dy: -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48*this.menuHeight,
+            }
+          })
+          this.menuHeight = 0;
+          this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
+            promptAction?.closeCustomDialog(contentNode);
+          })
+        } catch (error) {
+          console.error(`eroor`);
+        }
+      })
+  }
+
+
+
 }

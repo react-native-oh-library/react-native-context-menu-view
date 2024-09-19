@@ -75,6 +75,7 @@ public:
     public:
         void handleArkTSMessage(const Context &ctx) override {
             if (ctx.messageName == "contextMenu::onCancel") {
+                   LOG(INFO) << "2024-2menu---------handleArkTSMessage--onCancel";
                 auto itemTag = ctx.messagePayload["itemTag"].asInt();
                 auto rnInstance = ctx.rnInstance.lock();
                 auto rnInstanceCAPI = std::dynamic_pointer_cast<RNInstanceCAPI>(rnInstance);
@@ -84,11 +85,13 @@ public:
                         std::dynamic_pointer_cast<RTNContextMenuComponentInstance>(contextInstance);
                     if (rnContextInstance) {
                         rnContextInstance->onCancel();
+                        rnInstance->postMessageToArkTS("RNGH::CLOSE_MENU", NULL);
                     }
                 }
             }
 
             if (ctx.messageName == "contextMenu::SET_NATIVE_RESPONDERS_BLOCK") {
+                   LOG(INFO) << "2024-2menu---------handleArkTSMessage---SET_NATIVE_RESPONDERS_BLOCK";
                 auto itemTag = ctx.messagePayload["itemTag"].asInt();
                 auto itemTitle = ctx.messagePayload["itemTitle"].asString();
                 auto itemIndex = ctx.messagePayload["itemIndex"].asInt();
@@ -110,7 +113,7 @@ public:
                     if (rnContextInstance) {
                         rnContextInstance->onClick(itemIndex, onPressIndexPath, itemTitle);
                         // 发送消息到arkTS侧，提醒arkTS关闭当前弹框
-                        rnInstance->postMessageToArkTS("RNGH::CLOSE_MENU", NULL);
+//                         rnInstance->postMessageToArkTS("RNGH::CLOSE_MENU", NULL);
                     }
                 }
             }

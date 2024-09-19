@@ -66,8 +66,8 @@ interface ContextMenuProps {
 }
 
 @Component
-export struct ContextMenuLongPress {
-  public static readonly NAME = "ContextMenuLongPress"
+export struct ContextMenuLongPressWithNoSelect {
+  public static readonly NAME = "ContextMenuLongPressWithNoSelect"
   menuCtx!: RNOHContext;
   menuTag: number = 0;
   @State realViewPoint: Object = [];
@@ -94,7 +94,7 @@ export struct ContextMenuLongPress {
   @State deepChildActions: ESObject[] = [];
   @State isShow: boolean = false;
   @State twoMenu: ESObject[] = [];
-  @State selectedFlag: number = 0;
+  @State selectedFlag: ESObject[] = [ ];
 
   aboutToAppear() {
     let longPress: ESObject = this.realViewPoint;
@@ -175,11 +175,14 @@ export struct ContextMenuLongPress {
             (this.childActionsListDate[j])[k].disabled = true;
           }
           if ((this.childActionsListDate[j])[k].selected) {
-            this.selectedFlag++;
+            this.selectedFlag[k] = 1;
+          } else {
+            this.selectedFlag[k] = 0;
           }
         }
       }
     }
+    console.log('20240919----------------------'+JSON.stringify(this.childActionsListDate.length));
   }
 
   //退出组件
@@ -212,15 +215,13 @@ export struct ContextMenuLongPress {
         //遍历数据，把每个menuTitle塞入到对应的menu中
         ForEach(this.listDate, (item: ContextMenuProps, index) => {
           if (item.systemIcon) {
-            if (this.selectedFlag !== 0) {
+            if (this.selectedFlag[index]) {
               MenuItem({
                 content: item.title,
                 symbolEndIcon: new SymbolGlyphModifier($r(item.systemIcon)).fontSize('24vp')
                   .fontColor([item.iconColor]),
                 labelInfo: item.subtitle,
               })
-                .selected(item.selected)
-                .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
                 .contentFontColor(item.destructive)
@@ -228,10 +229,7 @@ export struct ContextMenuLongPress {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
-                  this.isTouchWithNoSelect = this.isTouch && (this.selectedFlag == 0);
-                  if (this.isTouchWithNoSelect && this.isTouch) {
-                    this.isTouch = false;
-                  }
+                  this.isTouchWithNoSelect = this.isTouch ;
                   this.isTouchViewNumber = index;
                   this.twoMenu = this.childActionsListDate[this.isTouchViewNumber]
                   console.log('2024touch:' + this.isTouch + ',' + 'inlineChildren:' + item.inlineChildren + ',' +
@@ -256,8 +254,6 @@ export struct ContextMenuLongPress {
                   .fontColor([item.iconColor]),
                 labelInfo: item.subtitle,
               })
-                .selected(item.selected)
-                .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
                 .contentFontColor(item.destructive)
@@ -265,10 +261,7 @@ export struct ContextMenuLongPress {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
-                  this.isTouchWithNoSelect = this.isTouch && (this.selectedFlag == 0);
-                  if (this.isTouchWithNoSelect && this.isTouch) {
-                    this.isTouch = false;
-                  }
+                  this.isTouchWithNoSelect = this.isTouch ;
                   this.isTouchViewNumber = index;
                   this.twoMenu = this.childActionsListDate[this.isTouchViewNumber]
                   console.log('2024touch:' + this.isTouch + ',' + 'inlineChildren:' + item.inlineChildren + ',' +
@@ -289,14 +282,12 @@ export struct ContextMenuLongPress {
             }
           } else {
             //如果没有systemIcon,则走自定义图标
-            if (this.selectedFlag !== 0) {
+            if (this.selectedFlag[index]) {
               MenuItem({
                 content: item.title,
                 endIcon: $r(item.icon),
                 labelInfo: item.subtitle,
               })
-                .selected(item.selected)
-                .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
                 .contentFontColor(item.destructive)
@@ -304,10 +295,6 @@ export struct ContextMenuLongPress {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
-                  this.isTouchWithNoSelect = this.isTouch && (this.selectedFlag == 0);
-                  if (this.isTouchWithNoSelect && this.isTouch) {
-                    this.isTouch = false;
-                  }
                   this.isTouchViewNumber = index;
                   this.twoMenu = this.childActionsListDate[this.isTouchViewNumber]
                   console.log('2024touch:' + this.isTouch + ',' + 'inlineChildren:' + item.inlineChildren + ',' +
@@ -331,8 +318,6 @@ export struct ContextMenuLongPress {
                 endIcon: $r(item.icon),
                 labelInfo: item.subtitle,
               })
-                .selected(item.selected)
-                .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
                 .contentFontColor(item.destructive)
@@ -340,10 +325,7 @@ export struct ContextMenuLongPress {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
-                  this.isTouchWithNoSelect = this.isTouch && (this.selectedFlag == 0);
-                  if (this.isTouchWithNoSelect && this.isTouch) {
-                    this.isTouch = false;
-                  }
+                  this.isTouchWithNoSelect = this.isTouch;
                   this.isTouchViewNumber = index;
                   this.twoMenu = this.childActionsListDate[this.isTouchViewNumber]
                   console.log('2024touch:' + this.isTouch + ',' + 'inlineChildren:' + item.inlineChildren + ',' +

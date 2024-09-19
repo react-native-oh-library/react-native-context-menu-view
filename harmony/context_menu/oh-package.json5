@@ -1,12 +1,12 @@
 {
   license: 'ISC',
   types: '',
-  name: "context_menu",
-  version: '1.16.0-0.0.1',
+  name: ""@react-native-oh-tpl/react-native-context-menu-view",
+  version: '1.16.0-0.0.2',
   description: '',
   main: 'index.ets',
   type: 'module',
   dependencies: {
-    "@rnoh/react-native-openharmony": "file:../libs/react_native_openharmony-5.0.0.490.har"
+     "@rnoh/react-native-openharmony": "file:../react_native_openharmony"
   },
 }

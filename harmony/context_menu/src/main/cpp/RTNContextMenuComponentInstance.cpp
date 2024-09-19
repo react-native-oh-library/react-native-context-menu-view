@@ -27,17 +27,15 @@
 #import "RNOH/arkui/StackNode.h"
 #include <iostream>
 #include <vector>
-#include "colorUtils/Color.h"
-
 
 namespace rnoh {
 
 RTNContextMenuComponentInstance::RTNContextMenuComponentInstance(Context context)
     : CppComponentInstance(std::move(context)) {
     // 单点事件
-    //     m_contextMenuNode.setCustomNodeDelegate(this);
+    // m_contextMenuNode.setCustomNodeDelegate(this);
     // 查看node生效的范围
-    m_contextMenuNode.setBackgroundColor(facebook::react::SharedColor(0xff7700ff));
+    // m_contextMenuNode.setBackgroundColor(facebook::react::SharedColor(0xff7700ff));
     m_contextMenuNode.setStackNodeDelegate(this);
     ArkUINodeRegistry::getInstance().registerTouchHandler(&m_contextMenuNode, this);
     NativeNodeApi::getInstance()->registerNodeEvent(m_contextMenuNode.getArkUINodeHandle(), NODE_TOUCH_EVENT,
@@ -213,13 +211,7 @@ void RTNContextMenuComponentInstance::onTouchEvent(ArkUI_UIInputEvent *e) {
     payload["dropdownMenuMode"] = this->dropdownMenuMode;
     payload["disabled"] = this->disabled;
     payload["previewBackgroundColor"] = this->previewBackgroundColor;
-
-    auto tintColor = getTintColorFromDynamic(m_props->rawProps);
-    if (tintColor.has_value()) {
-        auto tintColorValue = contextMenu::Color::FromString(tintColor.value()).GetValue();
-        LOG(INFO) << "20240722---------convertNodeTouchPointToDynamic----tintColorValue";
-    }
-
+    
     folly::dynamic touchViewActions = folly::dynamic::array();
     for (auto actions : m_props->actions) {
         folly::dynamic touchViewAction = folly::dynamic::object;

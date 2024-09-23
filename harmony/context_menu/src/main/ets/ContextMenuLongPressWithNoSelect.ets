@@ -215,7 +215,7 @@ export struct ContextMenuLongPressWithNoSelect {
         //遍历数据，把每个menuTitle塞入到对应的menu中
         ForEach(this.listDate, (item: ContextMenuProps, index) => {
           if (item.systemIcon) {
-            if (this.selectedFlag[index]) {
+            if (this.childActionsListDate.length >= 0) {
               MenuItem({
                 content: item.title,
                 symbolEndIcon: new SymbolGlyphModifier($r(item.systemIcon)).fontSize('24vp')
@@ -244,9 +244,9 @@ export struct ContextMenuLongPressWithNoSelect {
                       itemIndexPath: [0],
                       itemInlineChildren: item.inlineChildren
                     });
-                  }
-                })//弹框,通过inlineChildren来判定是否有二级目录,ture有二级目录
+                  }     })//弹框,通过inlineChildren来判定是否有二级目录,ture有二级目录
                 .bindContextMenu(this.isTouch, this.twoMenuView())
+
             } else {
               MenuItem({
                 content: item.title,
@@ -282,7 +282,7 @@ export struct ContextMenuLongPressWithNoSelect {
             }
           } else {
             //如果没有systemIcon,则走自定义图标
-            if (this.selectedFlag[index]) {
+            if (this.childActionsListDate.length >= 0) {
               MenuItem({
                 content: item.title,
                 endIcon: $r(item.icon),

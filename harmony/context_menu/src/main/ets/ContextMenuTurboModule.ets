@@ -96,9 +96,8 @@ export class ContextMenuTurboModule extends TurboModule {
   windowX: number = 0;
   windowY: number = 0;
   customDialogOpen: boolean = false;
-  selectedActions: ESObject ={};
   selectedFlag: number = 0;
-  menuHeight:number = 0;
+  menuHeight: number = 0;
 
   constructor(ctx: TurboModuleContext) {
     super(ctx)
@@ -139,30 +138,32 @@ export class ContextMenuTurboModule extends TurboModule {
               this.realViewPoint.windowY = e.touchPoints[0].windowY;
               this.windowY = e.touchPoints[0].windowY;
               this.realViewPoint.touchViewActions = e.touchViewActions;
-              this.selectedActions = e.touchViewActions;
+              let selectedActions: ESObject = e.touchViewActions;
               if (!this.longPressLock) {
                 this.realViewPoint.ctx = this.ctx;
-                for (let i = 0; i <  this.selectedActions.length; i++) {
-                  if (this.selectedActions[i].selected) {
+                for (let i = 0; i < selectedActions.length; i++) {
+                  if (selectedActions[i].selected) {
                     //复选框，默认为false
                     this.selectedFlag++;
                   }
                   this.menuHeight++;
                 }
-                if (this.menuHeight >=5) {
+                if (this.menuHeight >= 5) {
                   this.menuHeight = this.menuHeight - 5;
-                }  else {
+                } else {
                   this.menuHeight = 0;
                 }
                 if (this.selectedFlag > 0) {
                   //传入对应的ctx
                   this.realViewPoint.ctx = this.ctx;
                   this.onTouch(this.realViewPoint);
-                }  else {
+                  this.selectedFlag = 0;
+                } else {
                   //传入对应的ctx
                   this.realViewPoint.ctx = this.ctx;
                   //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
                   this.onTouchWithNoSelect(this.realViewPoint);
+                  this.selectedFlag = 0;
                 }
                 this.longPressLock = true;
               }
@@ -192,10 +193,32 @@ export class ContextMenuTurboModule extends TurboModule {
               this.windowY = e.touchPoints[0].windowY;
               //此处获取actions值
               this.realViewPoint.touchViewActions = e.touchViewActions;
-              //传入对应的ctx
-              this.realViewPoint.ctx = this.ctx;
               //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
-              this.onTouch(this.realViewPoint);
+              let selectedActions: ESObject = e.touchViewActions;
+              for (let i = 0; i < selectedActions.length; i++) {
+                if (selectedActions[i].selected) {
+                  //复选框，默认为false
+                  this.selectedFlag++;
+                }
+                this.menuHeight++;
+              }
+              if (this.menuHeight >= 5) {
+                this.menuHeight = this.menuHeight - 5;
+              } else {
+                this.menuHeight = 0;
+              }
+              if (this.selectedFlag > 0) {
+                //传入对应的ctx
+                this.realViewPoint.ctx = this.ctx;
+                this.onTouch(this.realViewPoint);
+                this.selectedFlag = 0;
+              } else {
+                //传入对应的ctx
+                this.realViewPoint.ctx = this.ctx;
+                //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
+                this.onTouchWithNoSelect(this.realViewPoint);
+                this.selectedFlag = 0;
+              }
               //e.dropdownMenuMode(默认)--->false,那么默认为长按，如果此时单次点击时间大于500ms则可以触发长按事件，小于500ms则不触发点击事件
             } else if (e.touchableViews[2] && !(e.dropdownMenuMode) && this.result >= 500) {
               // 因为在case中，已经判定是否为长按，case2中的逻辑，当点击在view视图，且dropdownMenuMode为false，并且，满足按压时间大于500ms，就会走长按
@@ -218,16 +241,20 @@ export class ContextMenuTurboModule extends TurboModule {
         const uiContext = value.getUIContext()
         const promptAction = uiContext?.getPromptAction();
         const contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenu), realViewPoint);
+        let offDx = -this.romWidth / 2 + this.windowX + this.width / 2;
+        let OffDy = -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48 * this.menuHeight;
         try {
           promptAction?.openCustomDialog(contentNode, {
             offset: {
-              dx: -this.romWidth / 2 + this.windowX + this.width / 2,
-              dy: -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48*this.menuHeight,
+              dx: offDx,
+              dy: OffDy,
             }
           })
           this.menuHeight = 0;
           this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
             promptAction?.closeCustomDialog(contentNode);
+            offDx = 0;
+            OffDy = 0;
           })
         } catch (error) {
           console.error(`eroor`);
@@ -241,23 +268,24 @@ export class ContextMenuTurboModule extends TurboModule {
         const uiContext = value.getUIContext()
         const promptAction = uiContext?.getPromptAction();
         const contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenuWithNoSelect), realViewPoint);
+        let offDx = -this.romWidth / 2 + this.windowX + this.width / 2;
+        let OffDy = -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48 * this.menuHeight;
         try {
           promptAction?.openCustomDialog(contentNode, {
             offset: {
-              dx: -this.romWidth / 2 + this.windowX + this.width / 2,
-              dy: -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48*this.menuHeight,
+              dx: offDx,
+              dy: OffDy,
             }
           })
           this.menuHeight = 0;
           this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
             promptAction?.closeCustomDialog(contentNode);
+            offDx = 0;
+            OffDy = 0;
           })
         } catch (error) {
           console.error(`eroor`);
         }
       })
   }
-
-
-
 }

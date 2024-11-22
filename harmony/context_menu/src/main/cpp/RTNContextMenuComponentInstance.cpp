@@ -58,7 +58,6 @@ std::optional<std::string> RTNContextMenuComponentInstance::getTintColorFromDyna
     return rawPropsColor;
 }
 
-
 void RTNContextMenuComponentInstance::onChildInserted(ComponentInstance::Shared const &childComponentInstance,
                                                       std::size_t index) {
     // 添加子节点，rn框架自带
@@ -88,7 +87,6 @@ void RTNContextMenuComponentInstance::onPropsChanged(SharedConcreteProps const &
         this->selected = props->selected;
     }
 }
-
 
 StackNode &RTNContextMenuComponentInstance::getLocalRootArkUINode() {
     return m_contextMenuNode;
@@ -140,7 +138,6 @@ folly::dynamic convertToDynamic(const facebook::react::RTNContextMenuActionsStru
     }
     return touchViewChildActions;
 }
-
 
 folly::dynamic convertNodeTouchPointToDynamic(ArkUI_UIInputEvent *e, int32_t index = 0) {
     folly::dynamic result = folly::dynamic::object;
@@ -284,8 +281,6 @@ RTNContextMenuComponentInstance::findTouchableViews(float componentX, float comp
         offsetX -= touchTarget->getCurrentOffset().x;
         offsetY -= touchTarget->getCurrentOffset().y;
     }
-
     return touchableViews;
 };
-
 } // namespace rnoh

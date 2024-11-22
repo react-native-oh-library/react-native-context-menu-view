@@ -26,7 +26,7 @@
 #include "RTNContextMenuComponentInstance.h"
 #include "ComponentDescriptors.h"
 #include "ContextMenuJSIBinder.h"
-
+#include "ContextMenuTurboModule.h"
 
 using namespace rnoh;
 using namespace facebook;
@@ -47,9 +47,25 @@ public:
     }
 };
 
+//注册对应的TurboModuleFactoryDelegate，715版本新增。让组件在C化的时候同时进行ArkTs的初始化
+class ContextMenuTurboModuleFactoryDelegate : public TurboModuleFactoryDelegate {
+public:
+    SharedTurboModule createTurboModule(Context ctx, const std::string &name) const override {
+        if (name == "ContextMenuTurboModule") {
+            return std::make_shared<ContextMenuTurboModule>(ctx, name);
+        }
+        return nullptr;
+    };
+};
+
 class ContextMenuPackage : public Package {
 public:
     ContextMenuPackage(Package::Context ctx) : Package(ctx) {}
+
+    //创建TurboModuleFactoryDelegate,715版本新增
+    std::unique_ptr<TurboModuleFactoryDelegate> createTurboModuleFactoryDelegate() override {
+        return std::make_unique<ContextMenuTurboModuleFactoryDelegate>();
+    }
 
     // 创建组件实体类
     ComponentInstanceFactoryDelegate::Shared createComponentInstanceFactoryDelegate() override {
@@ -64,7 +80,7 @@ public:
     ComponentJSIBinderByString createComponentJSIBinderByName() override {
         return {{"RTNContextMenu", std::make_shared<RTNContextMenuJSIBinder>()}};
     }
-
+    
     // arkTs2CPP
     std::vector<ArkTSMessageHandler::Shared> createArkTSMessageHandlers() override {
         return {std::make_shared<ScrollLockerArkTSMessageHandler>()};
@@ -75,7 +91,7 @@ public:
     public:
         void handleArkTSMessage(const Context &ctx) override {
             if (ctx.messageName == "contextMenu::onCancel") {
-                   LOG(INFO) << "2024-2menu---------handleArkTSMessage--onCancel";
+                LOG(INFO) << "ContextMenuPackage:handleArkTSMessage--onCancel";
                 auto itemTag = ctx.messagePayload["itemTag"].asInt();
                 auto rnInstance = ctx.rnInstance.lock();
                 auto rnInstanceCAPI = std::dynamic_pointer_cast<RNInstanceCAPI>(rnInstance);
@@ -91,7 +107,7 @@ public:
             }
 
             if (ctx.messageName == "contextMenu::SET_NATIVE_RESPONDERS_BLOCK") {
-                   LOG(INFO) << "2024-2menu---------handleArkTSMessage---SET_NATIVE_RESPONDERS_BLOCK";
+                LOG(INFO) << "contextMenu:handleArkTSMessage--SET_NATIVE_RESPONDERS_BLOCK";
                 auto itemTag = ctx.messagePayload["itemTag"].asInt();
                 auto itemTitle = ctx.messagePayload["itemTitle"].asString();
                 auto itemIndex = ctx.messagePayload["itemIndex"].asInt();
@@ -105,7 +121,7 @@ public:
                 auto rnInstance = ctx.rnInstance.lock();
                 auto rnInstanceCAPI = std::dynamic_pointer_cast<RNInstanceCAPI>(rnInstance);
                 auto contextInstance = rnInstanceCAPI->findComponentInstanceByTag(itemTag);
-                LOG(INFO) << "20240722---------ContextMenuPackage的方法---------ArkTSMessageHandler---contextInstance:"
+                LOG(INFO) << "ContextMenuPackage:ContextMenuPackage的方法---------ArkTSMessageHandler---contextInstance:"
                           << contextInstance;
                 if (contextInstance) {
                     auto rnContextInstance =

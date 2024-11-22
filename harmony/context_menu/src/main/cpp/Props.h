@@ -102,7 +102,6 @@ public:
 
     std::string title{};
     std::vector<RTNContextMenuActionsStruct> actions{};
-    //     RTNContextMenuActionsStruct actions{};
     std::string previewBackgroundColor{};
     bool dropdownMenuMode{};
     bool disabled{};

@@ -24,7 +24,6 @@
 
 #pragma once
 #include "RNOH/CppComponentInstance.h"
-// #include "ContextMenuStackNode.h"
 #include "ShadowNodes.h"
 #include "Props.h"
 #include "RNOH/CppComponentInstance.h"
@@ -81,7 +80,6 @@ public:
     void onChildRemoved(ComponentInstance::Shared const &childComponentInstance) override;
 
     // arkui为页面ui
-    // ContextMenuStackNode &getLocalRootArkUINode() override;
     StackNode &getLocalRootArkUINode() override;
 
     void onPropsChanged(SharedConcreteProps const &props) override;
@@ -117,13 +115,7 @@ public:
     };
 
 private:
-    //  ContextMenuStackNode m_contextMenuNode{};
-    //     StackNode m_contextMenuNode{};
-
     std::string title{};
-    //     std::vector<facebook::react::RTNContextMenuProps> actions{};
-    //     std::vector<RTNContextMenuActionsStruct> actions{};
-    //     RTNContextMenuActionsStruct actions{};
     RTNContextMenuActionsStruct actions{};
     std::string previewBackgroundColor{};
     bool dropdownMenuMode{};

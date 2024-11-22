@@ -22,26 +22,17 @@
  * SOFTWARE.
  */
 
-import {RNPackage, TurboModulesFactory} from '@rnoh/react-native-openharmony/ts';
-import type {TurboModule, TurboModuleContext} from '@rnoh/react-native-openharmony/ts';
-import { ContextMenuTurboModule } from './ContextMenuTurboModule';
+#pragma once
 
-class ContextMenuTurboModulesFactory extends TurboModulesFactory {
-  createTurboModule(name: string): TurboModule | null {
-    if (name === "ContextMenuTurboModule") {
-      console.log('20240722---我在ArkTs侧获取到了点击事件！ContextMenuTurboModulesFactory')
-      return new ContextMenuTurboModule(this.ctx);
-    }
-    return null;
-  }
+#include <ReactCommon/TurboModule.h>
+#include "RNOH/ArkTSTurboModule.h"
 
-  hasTurboModule(name: string): boolean {
-    return name === "ContextMenuTurboModule";
-  }
-}
+using namespace facebook;
+namespace rnoh {
+class JSI_EXPORT ContextMenuTurboModule : public ArkTSTurboModule {
+public:
+   //在715环境上，因为连接ArkTs的通道模式修改，需要在C侧注册对应的TurboModule
+    ContextMenuTurboModule(const ArkTSTurboModule::Context ctx, const std::string name);
+};
+} // namespace rnoh
 
-export class ContextMenuPackage extends RNPackage {
-  createTurboModulesFactory(ctx: TurboModuleContext): TurboModulesFactory {
-    return new ContextMenuTurboModulesFactory(ctx);
-  }
-}

@@ -30,7 +30,7 @@ class RTNContextMenuJSIBinder : public ViewComponentJSIBinder {
 
 protected:
     facebook::jsi::Object createNativeProps(facebook::jsi::Runtime &rt) override {
-        LOG(INFO) << "20240722---------createDirectEventTypes----createNativeProps";
+        LOG(INFO) << "ContextMenuJSIBinder----createNativeProps";
         auto object = ViewComponentJSIBinder::createNativeProps(rt);
         object.setProperty(rt, "title", "string");
         object.setProperty(rt, "subtitle", "string");
@@ -47,7 +47,7 @@ protected:
     }
 
     facebook::jsi::Object createDirectEventTypes(facebook::jsi::Runtime &rt) override {
-        LOG(INFO) << "20240722---------createDirectEventTypes----createDirectEventTypes";
+        LOG(INFO) << "ContextMenuJSIBinder----createDirectEventTypes";
         facebook::jsi::Object events = ViewComponentJSIBinder::createDirectEventTypes(rt);
         events.setProperty(rt, "topPress", createDirectEvent(rt, "onPress"));
         events.setProperty(rt, "topPreviewPress", createDirectEvent(rt, "onPreviewPress"));

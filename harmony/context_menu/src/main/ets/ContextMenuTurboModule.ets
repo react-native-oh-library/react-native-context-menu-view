@@ -106,8 +106,8 @@ export class ContextMenuTurboModule extends TurboModule {
       //e为C层拦截的ArkUI_UIInputEvent
       this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::TOUCH_EVENT", (e: ESObject) => {
         //获取view坐标
-        console.log('20240722---我在ArkTs侧获取到了点击事件！TOUCH_EVENT，touchableViews：' +
-        JSON.stringify(e.touchableViews) + '第三个节点为View:' + JSON.stringify(e.touchableViews[2]));
+        console.log('ContextMenu:在ArkTs侧获取到了点击事件！TOUCH_EVENT，touchableViews：' +
+        JSON.stringify(e.touchableViews) + '最后点击的节点为View:' + JSON.stringify(e.touchableViews[e.touchableViews.length-1]));
         //e.action进行获取点击事件的次数，进行判定
         switch (e.action) {
           case 1:
@@ -124,14 +124,15 @@ export class ContextMenuTurboModule extends TurboModule {
             //在按压的时候，此时会一直接口case2的消息，如果此在点击区域，且e.dropdownMenuMode为false按压事件超过500ms，则需要触发长按事件
             this.longPressTimestamp = e.timestamp / Math.pow(10, 6);
             this.longResult = this.longPressTimestamp - this.downTimestamp
-            if (e.touchableViews[2] && !(e.dropdownMenuMode) && this.longResult >= 500) {
-              this.realViewPoint.tag = e.touchableViews[1].tag;
-              this.realViewPoint.x = e.touchableViews[2].x;
-              this.realViewPoint.y = e.touchableViews[2].y;
-              this.realViewPoint.width = e.touchableViews[2].width;
-              this.width = e.touchableViews[2].width;
-              this.realViewPoint.height = e.touchableViews[2].height;
-              this.height = e.touchableViews[2].height;
+            if (e.touchableViews[e.touchableViews.length-1] && !(e.dropdownMenuMode) && this.longResult >= 500) {
+              //2024.12.06 fix：当处于多层嵌套外层情况下，tag值会错误
+              this.realViewPoint.tag = e.rootTag;
+              this.realViewPoint.x = e.touchableViews[e.touchableViews.length-1].x;
+              this.realViewPoint.y = e.touchableViews[e.touchableViews.length-1].y;
+              this.realViewPoint.width = e.touchableViews[e.touchableViews.length-1].width;
+              this.width = e.touchableViews[e.touchableViews.length-1].width;
+              this.realViewPoint.height = e.touchableViews[e.touchableViews.length-1].height;
+              this.height = e.touchableViews[e.touchableViews.length-1].height;
               this.realViewPoint.title = e.title;
               //获取点击的时候的触摸事件的坐标
               this.realViewPoint.windowX = e.touchPoints[0].windowX;
@@ -178,14 +179,14 @@ export class ContextMenuTurboModule extends TurboModule {
             //e.touchableViews：当点击view区域时,到获取的view固定有三个,主屏幕,contextmenu容器,view.需要获取view的坐标,view固定为数组中第三个
             //当点击外部的stack区域时候,获取的view只有两个，主屏幕和contextmenu容器,逻辑上是点击view才会触发menu
             // dropdownMenuMode-->true---->onTouch(),如果此时点击的事件大于500ms则不触发点击事件，如果小于500ms则触发点击效果
-            if (e.touchableViews[2] && e.dropdownMenuMode && this.result < 500) {
-              this.realViewPoint.tag = e.touchableViews[1].tag;
-              this.realViewPoint.x = e.touchableViews[2].x;
-              this.realViewPoint.y = e.touchableViews[2].y;
-              this.realViewPoint.width = e.touchableViews[2].width;
-              this.width = e.touchableViews[2].width;
-              this.realViewPoint.height = e.touchableViews[2].height;
-              this.height = e.touchableViews[2].height;
+            if (e.touchableViews[e.touchableViews.length-1] && e.dropdownMenuMode && this.result < 500) {
+              this.realViewPoint.tag = e.rootTag;
+              this.realViewPoint.x = e.touchableViews[e.touchableViews.length-1].x;
+              this.realViewPoint.y = e.touchableViews[e.touchableViews.length-1].y;
+              this.realViewPoint.width = e.touchableViews[e.touchableViews.length-1].width;
+              this.width = e.touchableViews[e.touchableViews.length-1].width;
+              this.realViewPoint.height = e.touchableViews[e.touchableViews.length-1].height;
+              this.height = e.touchableViews[e.touchableViews.length-1].height;
               this.realViewPoint.title = e.title;
               //点击事件，触摸坐标
               this.realViewPoint.windowX = e.touchPoints[0].windowX;
@@ -221,7 +222,7 @@ export class ContextMenuTurboModule extends TurboModule {
                 this.selectedFlag = 0;
               }
               //e.dropdownMenuMode(默认)--->false,那么默认为长按，如果此时单次点击时间大于500ms则可以触发长按事件，小于500ms则不触发点击事件
-            } else if (e.touchableViews[2] && !(e.dropdownMenuMode) && this.result >= 500) {
+            } else if (e.touchableViews[e.touchableViews.length-1] && !(e.dropdownMenuMode) && this.result >= 500) {
               // 因为在case中，已经判定是否为长按，case2中的逻辑，当点击在view视图，且dropdownMenuMode为false，并且，满足按压时间大于500ms，就会走长按
               //并且将长按锁置于true，在手指抬起的时候，会触发case3事件，那么在该处进行判断,不用再触发longPress事件，只用将长按锁置于初始化即可
               this.longPressLock = false;

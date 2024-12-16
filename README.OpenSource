@@ -3,9 +3,9 @@
         "Name": "react-native-context-menu-view",
         "License": "MIT License",
         "License File": "https://github.com/mpiannucci/react-native-context-menu-view/blob/main/LICENSE",
-        "Version Number": "3.0.0-alpha.1",
+        "Version Number": "1.16.0",
 		"Owner" : "xiafeng@huawei.com",
         "Upstream URL": "https://github.com/mpiannucci/react-native-context-menu-view",
-        "Description": "A <LinearGradient> element for React Native"
+        "Description": "Use native context menu views from React Native"
     }
 ]

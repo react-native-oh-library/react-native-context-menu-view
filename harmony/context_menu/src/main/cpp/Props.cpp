@@ -27,7 +27,8 @@ RTNContextMenuProps::RTNContextMenuProps(const PropsParserContext &context, cons
       iconColor(convertRawProp(context, rawProps, "iconColor", sourceProps.iconColor, {})),
       destructive(convertRawProp(context, rawProps, "destructive", sourceProps.destructive, {false})),
       selected(convertRawProp(context, rawProps, "selected", sourceProps.selected, {false})),
-      inlineChildren(convertRawProp(context, rawProps, "inlineChildren", sourceProps.inlineChildren, {false})) {}
+      inlineChildren(convertRawProp(context, rawProps, "inlineChildren", sourceProps.inlineChildren, {false})),
+      fontName(convertRawProp(context, rawProps, "fontName", sourceProps.fontName, {})) {}
 
 } // namespace react
 } // namespace facebook

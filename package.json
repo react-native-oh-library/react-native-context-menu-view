@@ -1,6 +1,6 @@
 {
-  "name": "@react-native-oh-tpl/react-native-context-menu-view",
-  "version": "1.16.0-0.0.6",
+  "name": "@react-native-ohos/react-native-context-menu-view",
+  "version": "1.19.0",
   "description": "Use native context menu views from React Native",
   "main": "index.js",
   "types": "index.d.ts",
@@ -22,14 +22,13 @@
     "android",
     "harmony"
   ],
-  "repository": "https://github.com/<your_github_handle>/rtn-centered-text",
+  "repository": "https://github.com/react-native-oh-library/react-native-context-menu-view",
   "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/<your_github_handle>/rtn-centered-text/issues"
+    "url": "https://github.com/react-native-oh-library/react-native-context-menu-view/issues"
   },
-  "homepage": "https://github.com/<your_github_handle>/rtn-centered-text#readme",
-  "devDependencies": {},
+  "homepage": "https://github.com/react-native-oh-library/react-native-context-menu-view/tree/br_rnoh0.77#readme",
   "peerDependencies": {
     "react": "*",
     "react-native": "*"

@@ -1,6 +1,6 @@
-# @react-native-oh-tpl/react-native-context-menu-view
+# @react-native-ohos/react-native-context-menu-view
 
-This project is based on [react-native-context-menu-view](https://github.com/mpiannucci/react-native-context-menu-view)
+This project is based on [react-native-context-menu-view@v1.19.0](https://github.com/mpiannucci/react-native-context-menu-view/tree/v1.19.0)
 
 ## Documentation
 
@@ -10,4 +10,4 @@ This project is based on [react-native-context-menu-view](https://github.com/mpi
 
 ## License
 
-This library is licensed under [The MIT License (MIT)](https://github.com/mpiannucci/react-native-context-menu-view/blob/main/LICENSE)
+This library is licensed under [The MIT License (MIT)](https://github.com/mpiannucci/react-native-context-menu-view/blob/v1.19.0/LICENSE)

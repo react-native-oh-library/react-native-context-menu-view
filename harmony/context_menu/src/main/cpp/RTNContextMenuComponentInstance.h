@@ -103,6 +103,7 @@ public:
 
     struct RTNContextMenuActionsStruct {
         std::string title;
+        std::string titleColor;
         std::string subtitle;
         std::string systemIcon;
         std::string icon;
@@ -129,6 +130,8 @@ private:
     bool inlineChildren{};
 
     bool m_isHandlingTouches = false;
+    std::string fontName{};
+
     StackNode m_contextMenuNode;
     std::vector<TouchableView> findTouchableViews(float componentX, float componentY);
     std::optional<std::string> getTintColorFromDynamic(folly::dynamic value);

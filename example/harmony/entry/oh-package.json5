@@ -1,0 +1,11 @@
+{
+  "license": "ISC",
+  "devDependencies": {},
+  "name": "entry",
+  "description": "example description",
+  "version": "1.19.1-rc.1",
+  "dependencies": {
+    "@rnoh/react-native-openharmony": "file:../../node_modules/react-native-harmony/harmony/react_native_openharmony.har",
+    "@react-native-ohos/react-native-context-menu-view": "file:../../node_modules/@react-native-ohos/react-native-context-menu-view/harmony/context_menu.har"
+  }
+}

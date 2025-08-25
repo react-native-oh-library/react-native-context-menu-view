@@ -82,6 +82,7 @@ void RTNContextMenuComponentInstance::onPropsChanged(SharedConcreteProps const &
         this->subtitle = props->subtitle;
         this->systemIcon = props->systemIcon;
         this->iconColor = props->iconColor;
+        this->fontName = props->fontName;
         // ios only
         this->destructive = props->destructive;
         this->selected = props->selected;
@@ -120,6 +121,7 @@ folly::dynamic convertToDynamic(const facebook::react::RTNContextMenuActionsStru
     folly::dynamic touchViewChildActions = folly::dynamic::object;
     touchViewChildActions["childActionsTag"] = level;
     touchViewChildActions["title"] = action.title;
+    touchViewChildActions["titleColor"] = action.titleColor;
     touchViewChildActions["subtitle"] = action.subtitle;
     touchViewChildActions["systemIcon"] = action.systemIcon;
     touchViewChildActions["icon"] = action.icon;
@@ -208,11 +210,13 @@ void RTNContextMenuComponentInstance::onTouchEvent(ArkUI_UIInputEvent *e) {
     payload["dropdownMenuMode"] = this->dropdownMenuMode;
     payload["disabled"] = this->disabled;
     payload["previewBackgroundColor"] = this->previewBackgroundColor;
+    payload["fontName"] = this->fontName;
     
     folly::dynamic touchViewActions = folly::dynamic::array();
     for (auto actions : m_props->actions) {
         folly::dynamic touchViewAction = folly::dynamic::object;
         touchViewAction["title"] = actions.title;
+        touchViewAction["titleColor"] = actions.titleColor;
         touchViewAction["subtitle"] = actions.subtitle;
         touchViewAction["systemIcon"] = actions.systemIcon;
         touchViewAction["icon"] = actions.icon;

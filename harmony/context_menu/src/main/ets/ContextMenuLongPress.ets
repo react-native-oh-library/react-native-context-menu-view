@@ -38,6 +38,7 @@ interface ContextMenuProps {
   windowX?: number;
   windowY?: number;
   title?: string;
+  titleColor?: string;
   action?: string;
   dropdownMenuMode?: boolean;
   disabled?: boolean;
@@ -55,6 +56,7 @@ interface ContextMenuProps {
   icon?: string;
   destructive?: string
   iconColor?: string;
+  fontName?: string;
 
   //二级目录
   inlineChildren?: boolean;
@@ -95,9 +97,17 @@ export struct ContextMenuLongPress {
   @State isShow: boolean = false;
   @State twoMenu: ESObject[] = [];
   @State selectedFlag: number = 0;
+  @State menuFontName: string = '';
+  private uiContext: UIContext = this.getUIContext();
 
   aboutToAppear() {
     let longPress: ESObject = this.realViewPoint;
+    // 获取Font资源
+    this.menuFontName = longPress.fontName
+    this.uiContext.getFont().registerFont({
+      familyName: this.menuFontName,
+      familySrc: $rawfile(`${this.menuFontName}.TTF`)
+    })
     //menu的大标题
     this.menuTitle = longPress.title;
     //获取menu的xy轴，以及view视图的长宽
@@ -118,10 +128,7 @@ export struct ContextMenuLongPress {
     for (let i = 0; i < longPress.touchViewActions.length; i++) {
       if (longPress.touchViewActions[i].destructive) {
         //可破坏为红色
-        this.listDate[i].destructive = 'red';
-      } else {
-        //不可破坏为black
-        this.listDate[i].destructive = 'black';
+        this.listDate[i].titleColor = 'red';
       }
     }
     //  contextMenu入参为disabled,是否禁用选项，默认为false，表示不用禁用.
@@ -219,11 +226,14 @@ export struct ContextMenuLongPress {
                   .fontColor([item.iconColor]),
                 labelInfo: item.subtitle,
               })
+                .contentFont({
+                  family : this.menuFontName
+                })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
-                .contentFontColor(item.destructive)
+                .contentFontColor(item.titleColor)
                 .onClick(() => {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
@@ -256,11 +266,14 @@ export struct ContextMenuLongPress {
                   .fontColor([item.iconColor]),
                 labelInfo: item.subtitle,
               })
+                .contentFont({
+                  family : this.menuFontName
+                })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
-                .contentFontColor(item.destructive)
+                .contentFontColor(item.titleColor)
                 .onClick(() => {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
@@ -295,11 +308,14 @@ export struct ContextMenuLongPress {
                 endIcon: $r(item.icon),
                 labelInfo: item.subtitle,
               })
+                .contentFont({
+                  family : this.menuFontName
+                })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
-                .contentFontColor(item.destructive)
+                .contentFontColor(item.titleColor)
                 .onClick(() => {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
@@ -331,11 +347,14 @@ export struct ContextMenuLongPress {
                 endIcon: $r(item.icon),
                 labelInfo: item.subtitle,
               })
+                .contentFont({
+                  family : this.menuFontName
+                })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
                 .alignSelf(ItemAlign.Start)
                 .enabled(item.disabled)
-                .contentFontColor(item.destructive)
+                .contentFontColor(item.titleColor)
                 .onClick(() => {
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示

@@ -5,6 +5,7 @@ import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativ
 
 export interface ContextMenuAction {
     title: string;
+    titleColor: string;
     subtitle?: string;
     systemIcon?: string;
     icon?: string;
@@ -13,7 +14,6 @@ export interface ContextMenuAction {
     selected?: boolean;
     disabled?: boolean;
     inlineChildren?: boolean;
-    actions?: ContextMenuAction;
   }
   
   export interface ContextMenuOnPressNativeEvent {
@@ -29,7 +29,6 @@ export interface ContextMenuAction {
     onPreviewPress?: DirectEventHandler<Readonly<{}>>
     onCancel?: DirectEventHandler<Readonly<{}>>
     previewBackgroundColor?: string;
-    // preview?: React.ReactNode;
     dropdownMenuMode?: boolean;
     disabled?: boolean;
     // children?: React.ReactNode;
@@ -40,7 +39,8 @@ export interface ContextMenuAction {
     destructive?: boolean;
     selected?: boolean;
     inlineChildren?: boolean;
-    preview?: React.ReactNode;
+    preview?: string;
+    fontName: string;
   }
 
 export type ContextMenuViewComponentType = HostComponent<ContextMenuProps>

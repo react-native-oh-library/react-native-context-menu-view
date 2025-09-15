@@ -1,8 +1,8 @@
 {
   license: 'ISC',
   types: '',
-  name: "@react-native-oh-tpl/react-native-context-menu-view",
-  version: '1.16.0-0.0.6',
+  name: "@react-native-ohos/react-native-context-menu-view",
+  version: '1.19.0',
   description: '',
   main: 'index.ets',
   type: 'module',

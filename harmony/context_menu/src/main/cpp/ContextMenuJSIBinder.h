@@ -43,6 +43,7 @@ protected:
         object.setProperty(rt, "selected", "bool");
         object.setProperty(rt, "previewBackgroundColor", "string");
         object.setProperty(rt, "actions", "Object");
+        object.setProperty(rt, "fontName", "string");
         return object;
     }
 

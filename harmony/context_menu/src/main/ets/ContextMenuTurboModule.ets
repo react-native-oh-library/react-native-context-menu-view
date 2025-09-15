@@ -50,6 +50,7 @@ export interface ContextMenuProps {
   windowX?: number;
   windowY?: number;
   title?: string;
+  titleColor?: string;
   subtitle?: string;
   action?: string;
   dropdownMenuMode?: boolean;
@@ -68,6 +69,7 @@ export interface ContextMenuProps {
   iconColor?: string;
   childActions?: ContextMenuProps;
   childActionsTag?: number;
+  fontName?: string;
 }
 
 export class ContextMenuTurboModule extends TurboModule {
@@ -134,6 +136,7 @@ export class ContextMenuTurboModule extends TurboModule {
               this.realViewPoint.height = e.touchableViews[e.touchableViews.length-1].height;
               this.height = e.touchableViews[e.touchableViews.length-1].height;
               this.realViewPoint.title = e.title;
+              this.realViewPoint.fontName = e.fontName;
               //获取点击的时候的触摸事件的坐标
               this.realViewPoint.windowX = e.touchPoints[0].windowX;
               this.windowX = e.touchPoints[0].windowX;
@@ -188,6 +191,7 @@ export class ContextMenuTurboModule extends TurboModule {
               this.realViewPoint.height = e.touchableViews[e.touchableViews.length-1].height;
               this.height = e.touchableViews[e.touchableViews.length-1].height;
               this.realViewPoint.title = e.title;
+              this.realViewPoint.fontName = e.fontName;
               //点击事件，触摸坐标
               this.realViewPoint.windowX = e.touchPoints[0].windowX;
               this.windowX = e.touchPoints[0].windowX;

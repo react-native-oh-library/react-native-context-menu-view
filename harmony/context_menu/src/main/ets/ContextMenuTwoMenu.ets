@@ -38,6 +38,7 @@ interface ContextMenuProps {
   windowX?: number;
   windowY?: number;
   title?: string;
+  titleColor?: string;
   action?: string;
   dropdownMenuMode?: boolean;
   disabled?: boolean;
@@ -152,7 +153,7 @@ export struct ContextMenuTwoMenu {
             .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
             .alignSelf(ItemAlign.Start)
             .enabled(childItem.disabled)
-            .contentFontColor(childItem.destructive)
+            .contentFontColor(childItem.titleColor)
             .onClick(() => {
               this.nextMenu = this.longPress[index1].childActions;
               this.isTouchViewNumber = index1;
@@ -187,7 +188,7 @@ export struct ContextMenuTwoMenu {
             .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
             .alignSelf(ItemAlign.Start)
             .enabled(childItem.disabled)
-            .contentFontColor(childItem.destructive)
+            .contentFontColor(childItem.titleColor)
             .onClick(() => {
               this.nextMenu = this.longPress[index1].childActions;
               this.isTouchViewNumber = index1;

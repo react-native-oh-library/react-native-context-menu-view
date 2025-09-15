@@ -17,6 +17,7 @@ namespace react {
 
 struct RTNContextMenuActionsStruct {
     std::string title;
+    std::string titleColor;
     std::string subtitle = "";
     std::string systemIcon;
     std::string icon;
@@ -30,11 +31,15 @@ struct RTNContextMenuActionsStruct {
 
 static inline void fromRawValue(const PropsParserContext &context, const RawValue &value,
                                 RTNContextMenuActionsStruct &result) {
-    auto map = (butter::map<std::string, RawValue>)value;
+    auto map = (std::unordered_map<std::string, RawValue>)value;
 
     auto tmp_title = map.find("title");
     if (tmp_title != map.end()) {
         fromRawValue(context, tmp_title->second, result.title);
+    }
+    auto tmp_titleColor = map.find("titleColor");
+    if (tmp_titleColor != map.end()) {
+        fromRawValue(context, tmp_titleColor->second, result.titleColor);
     }
     auto tmp_subtitle = map.find("subtitle");
     if (tmp_subtitle != map.end()) {
@@ -109,6 +114,7 @@ public:
     bool destructive{};
     bool selected{};
     bool inlineChildren{};
+    std::string fontName{};
 };
 
 } // namespace react

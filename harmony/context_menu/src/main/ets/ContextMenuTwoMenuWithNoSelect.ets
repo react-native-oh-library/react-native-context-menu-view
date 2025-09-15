@@ -38,6 +38,7 @@ interface ContextMenuProps {
   windowX?: number;
   windowY?: number;
   title?: string;
+  titleColor?: string;
   action?: string;
   dropdownMenuMode?: boolean;
   disabled?: boolean;
@@ -151,7 +152,7 @@ export struct ContextMenuTwoMenuWithNoSelect {
           })//selected复选标记,根据传入的selected来判断selected为默认为false,不显示
             .alignSelf(ItemAlign.Start)
             .enabled(childItem.disabled)
-            .contentFontColor(childItem.destructive)
+            .contentFontColor(childItem.titleColor)
             .onClick(() => {
               this.nextMenu = this.longPress[index1].childActions;
               this.isTouch = true && (!childItem.inlineChildren) && (childItem.childActions !== undefined);
@@ -185,7 +186,7 @@ export struct ContextMenuTwoMenuWithNoSelect {
           })//selected复选标记,根据传入的selected来判断selected为默认为false,不显示
             .alignSelf(ItemAlign.Start)
             .enabled(childItem.disabled)
-            .contentFontColor(childItem.destructive)
+            .contentFontColor(childItem.titleColor)
             .onClick(() => {
               this.nextMenu = this.longPress[index1].childActions;
               this.isTouch = true && (!childItem.inlineChildren) && (childItem.childActions !== undefined);

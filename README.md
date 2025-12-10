@@ -1,6 +1,6 @@
-# @react-native-oh-tpl/react-native-context-menu-view
+# @react-native-ohos/react-native-context-menu-view
 
-This project is based on [react-native-context-menu-view](https://github.com/mpiannucci/react-native-context-menu-view)
+This project is based on [react-native-context-menu-view@1.12.0](https://github.com/mpiannucci/react-native-context-menu-view/tree/v1.12.0)
 
 ## Documentation
 

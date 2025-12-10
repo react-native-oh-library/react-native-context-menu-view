@@ -4,7 +4,6 @@
 ### v1.19.1-rc.2
 
 - pre-release version 1.19.1-rc.2
-- feat: add OpenHarmony support for react-native-context-menu-view
 
 ### v1.19.1-rc.1
 

@@ -41,6 +41,43 @@ function buildContextMenuWithNoSelect(realViewPoint: ESObject) {
 }
 
 
+let uiContext = null;
+let promptAction = null;
+let contentNode = null;
+
+let realViewPointX = 0;
+let realViewPointY = 0;
+let windowWidth: number = 0;
+let windowHeight: number = 0;
+
+export function writeResult(width: Length, height: Length) {
+  try {
+    let x = realViewPointX + (width as number);
+    let y = realViewPointY + (height as number);
+
+    if (x > windowWidth) {
+      realViewPointX = realViewPointX - (x - windowWidth) - 10;
+    }
+    if (y > windowHeight) {
+      realViewPointY = realViewPointY - (y - windowHeight) - 10;
+    }
+
+    promptAction?.openCustomDialog(contentNode, {
+      alignment: DialogAlignment.TopStart,
+      offset: {
+        dx: realViewPointX,
+        dy: realViewPointY,
+      }
+    })
+    this.menuHeight = 0;
+    this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
+      promptAction?.closeCustomDialog(contentNode);
+    })
+  } catch (error) {
+    console.error(`eroor`);
+  }
+}
+
 export interface ContextMenuProps {
   tag?: number;
   width?: number;
@@ -120,6 +157,9 @@ export class ContextMenuTurboModule extends TurboModule {
             this.romWidth = e.touchableViews[0].width;
             this.realViewPoint.romHeight = e.touchableViews[0].height;
             this.romHeight = e.touchableViews[0].height;
+
+            windowWidth = this.romWidth;
+            windowHeight = this.romHeight;
             break;
           case 2:
             //isCancel = true; move x1-x > 150 移动判断  y1-y >200
@@ -142,6 +182,9 @@ export class ContextMenuTurboModule extends TurboModule {
               this.windowX = e.touchPoints[0].windowX;
               this.realViewPoint.windowY = e.touchPoints[0].windowY;
               this.windowY = e.touchPoints[0].windowY;
+
+              realViewPointX = this.windowX;
+              realViewPointY = this.windowY;
               this.realViewPoint.touchViewActions = e.touchViewActions;
               let selectedActions: ESObject = e.touchViewActions;
               if (!this.longPressLock) {
@@ -197,6 +240,10 @@ export class ContextMenuTurboModule extends TurboModule {
               this.windowX = e.touchPoints[0].windowX;
               this.realViewPoint.windowY = e.touchPoints[0].windowY;
               this.windowY = e.touchPoints[0].windowY;
+
+              realViewPointX = this.windowX;
+              realViewPointY = this.windowY;
+
               //此处获取actions值
               this.realViewPoint.touchViewActions = e.touchViewActions;
               //当获取到了view视图,并且dropdownMenuMode为true的时候,进入单点效果.
@@ -244,54 +291,18 @@ export class ContextMenuTurboModule extends TurboModule {
   onTouch(realViewPoint: Object) {
     window.getLastWindow(this.ctx.uiAbilityContext)
       .then((value) => {
-        const uiContext = value.getUIContext()
-        const promptAction = uiContext?.getPromptAction();
-        const contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenu), realViewPoint);
-        let offDx = -this.romWidth / 2 + this.windowX + this.width / 2;
-        let OffDy = -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48 * this.menuHeight;
-        try {
-          promptAction?.openCustomDialog(contentNode, {
-            offset: {
-              dx: offDx,
-              dy: OffDy,
-            }
-          })
-          this.menuHeight = 0;
-          this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
-            promptAction?.closeCustomDialog(contentNode);
-            offDx = 0;
-            OffDy = 0;
-          })
-        } catch (error) {
-          console.error(`eroor`);
-        }
+        uiContext = value.getUIContext()
+        promptAction = uiContext?.getPromptAction();
+        contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenu), realViewPoint);
       })
   }
 
   onTouchWithNoSelect(realViewPoint: Object) {
     window.getLastWindow(this.ctx.uiAbilityContext)
       .then((value) => {
-        const uiContext = value.getUIContext()
-        const promptAction = uiContext?.getPromptAction();
-        const contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenuWithNoSelect), realViewPoint);
-        let offDx = -this.romWidth / 2 + this.windowX + this.width / 2;
-        let OffDy = -this.romHeight / 2 + this.windowY + this.height * 0.4 + 48 * this.menuHeight;
-        try {
-          promptAction?.openCustomDialog(contentNode, {
-            offset: {
-              dx: offDx,
-              dy: OffDy,
-            }
-          })
-          this.menuHeight = 0;
-          this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
-            promptAction?.closeCustomDialog(contentNode);
-            offDx = 0;
-            OffDy = 0;
-          })
-        } catch (error) {
-          console.error(`eroor`);
-        }
+        uiContext = value.getUIContext()
+        promptAction = uiContext?.getPromptAction();
+        contentNode = new ComponentContent(uiContext!, wrapBuilder(buildContextMenuWithNoSelect), realViewPoint);
       })
   }
 }

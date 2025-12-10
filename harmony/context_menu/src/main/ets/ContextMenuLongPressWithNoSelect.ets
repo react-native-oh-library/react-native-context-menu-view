@@ -27,6 +27,7 @@ import Logger from './Logger';
 import { SymbolGlyphModifier } from '@kit.ArkUI';
 import { ContextMenuTwoMenu } from './ContextMenuTwoMenu';
 import { ContextMenuTwoMenuWithNoSelect } from './ContextMenuTwoMenuWithNoSelect';
+import { writeResult } from './ContextMenuTurboModule';
 
 //这里的属性类型要和ContextMenuTurboModule.ets下的ContextMenuProps一致
 interface ContextMenuProps {
@@ -366,7 +367,11 @@ export struct ContextMenuLongPressWithNoSelect {
           }
         })
       }.backgroundColor('white')
-    }.onDisAppear(() => {
+    }
+    .onSizeChange((oldValue: SizeOptions, newValue: SizeOptions) => {
+      writeResult(newValue.width, newValue.height)
+    })
+    .onDisAppear(() => {
       this.menuCtx.rnInstance.postMessageToCpp('contextMenu::onCancel', {
         itemTag: this.menuTag,
       });

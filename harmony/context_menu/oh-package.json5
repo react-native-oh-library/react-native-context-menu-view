@@ -2,7 +2,7 @@
   license: 'ISC',
   types: '',
   name: "@react-native-ohos/react-native-context-menu-view",
-  version: '1.19.1-rc.1',
+  version: '1.19.1-rc.2',
   description: '',
   main: 'index.ets',
   type: 'module',

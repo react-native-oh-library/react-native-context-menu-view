@@ -1,5 +1,5 @@
 {
-  "name": "@react-native-oh-tpl/react-native-context-menu-view",
+  "name": "@react-native-ohos/react-native-context-menu-view",
   "version": "1.16.0-0.0.6",
   "description": "Use native context menu views from React Native",
   "main": "index.js",
@@ -22,19 +22,28 @@
     "android",
     "harmony"
   ],
-  "repository": "https://github.com/<your_github_handle>/rtn-centered-text",
-  "author": "<Your Name> <your_email@your_provider.com> (https://github.com/<your_github_handle>)",
+  "repository": "https://github.com/react-native-oh-library/react-native-context-menu-view",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/<your_github_handle>/rtn-centered-text/issues"
+    "url": "https://github.com/react-native-oh-library/react-native-context-menu-view/issues"
   },
-  "homepage": "https://github.com/<your_github_handle>/rtn-centered-text#readme",
+  "homepage": "https://github.com/react-native-oh-library/react-native-context-menu-view#readme",
   "devDependencies": {},
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
   "harmony": {
-    "alias": "react-native-context-menu-view"
+    "alias": "react-native-context-menu-view",
+    "autolinking": {
+      "etsPackageClassName":"ContextMenuPackage",
+      "cppPackageClassName":"ContextMenuPackage",
+      "cmakeLibraryTargetName": "rnoh_context_menu", 
+      "ohPackageName": "@react-native-ohos/react-native-context-menu-view"
+    }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

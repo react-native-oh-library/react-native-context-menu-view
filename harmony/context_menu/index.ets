@@ -22,5 +22,7 @@
  * SOFTWARE.
  */
 
+import { ContextMenuPackage } from './src/main/ets/ContextMenuPackage'
 export * from './ts'
 export * from './src/main/ets/ContextMenuLongPress'
+export default ContextMenuPackage

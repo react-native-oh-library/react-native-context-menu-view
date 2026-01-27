@@ -369,7 +369,7 @@ export struct ContextMenuLongPressWithNoSelect {
       }.backgroundColor('white')
     }
     .onSizeChange((oldValue: SizeOptions, newValue: SizeOptions) => {
-      writeResult(newValue.width, newValue.height)
+      writeResult(newValue)
     })
     .onDisAppear(() => {
       this.menuCtx.rnInstance.postMessageToCpp('contextMenu::onCancel', {

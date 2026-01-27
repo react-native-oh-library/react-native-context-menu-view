@@ -23,7 +23,7 @@
  */
 
 import { TurboModule, TurboModuleContext } from "@rnoh/react-native-openharmony/ts";
-import { ComponentContent, window } from '@kit.ArkUI';
+import { ComponentContent, PromptAction, window } from '@kit.ArkUI';
 import { ContextMenuLongPress } from './ContextMenuLongPress';
 import { RNOHContext } from '@rnoh/react-native-openharmony';
 import { ContextMenuLongPressWithNoSelect } from './ContextMenuLongPressWithNoSelect';
@@ -41,19 +41,20 @@ function buildContextMenuWithNoSelect(realViewPoint: ESObject) {
 }
 
 
-let uiContext = null;
-let promptAction = null;
-let contentNode = null;
+let uiContext: UIContext | null = null;
+let promptAction: PromptAction | null = null;
+let contentNode: ComponentContent<Object> | null = null;
 
 let realViewPointX = 0;
 let realViewPointY = 0;
 let windowWidth: number = 0;
 let windowHeight: number = 0;
+let rnOHContext: RNOHContext;
 
-export function writeResult(width: Length, height: Length) {
+export function writeResult(newValue: SizeOptions) {
   try {
-    let x = realViewPointX + (width as number);
-    let y = realViewPointY + (height as number);
+    let x = realViewPointX + (newValue.width as number);
+    let y = realViewPointY + (newValue.height as number);
 
     if (x > windowWidth) {
       realViewPointX = realViewPointX - (x - windowWidth) - 10;
@@ -69,8 +70,7 @@ export function writeResult(width: Length, height: Length) {
         dy: realViewPointY,
       }
     })
-    this.menuHeight = 0;
-    this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
+    rnOHContext.rnInstance.cppEventEmitter.subscribe("RNGH::CLOSE_MENU", () => {
       promptAction?.closeCustomDialog(contentNode);
     })
   } catch (error) {
@@ -141,12 +141,14 @@ export class ContextMenuTurboModule extends TurboModule {
 
   constructor(ctx: TurboModuleContext) {
     super(ctx)
+    rnOHContext = ctx;
     if (this.ctx.rnInstance.getArchitecture() === "C_API") {
       //e为C层拦截的ArkUI_UIInputEvent
       this.ctx.rnInstance.cppEventEmitter.subscribe("RNGH::TOUCH_EVENT", (e: ESObject) => {
         //获取view坐标
         console.log('ContextMenu:在ArkTs侧获取到了点击事件！TOUCH_EVENT，touchableViews：' +
-        JSON.stringify(e.touchableViews) + '最后点击的节点为View:' + JSON.stringify(e.touchableViews[e.touchableViews.length-1]));
+        JSON.stringify(e.touchableViews) + '最后点击的节点为View:' +
+        JSON.stringify(e.touchableViews[e.touchableViews.length-1]));
         //e.action进行获取点击事件的次数，进行判定
         switch (e.action) {
           case 1:

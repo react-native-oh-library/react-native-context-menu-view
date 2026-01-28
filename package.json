@@ -1,6 +1,6 @@
 {
   "name": "@react-native-ohos/react-native-context-menu-view",
-  "version": "1.19.1-rc.2",
+  "version": "1.19.1",
   "description": "Use native context menu views from React Native",
   "main": "index.js",
   "types": "index.d.ts",

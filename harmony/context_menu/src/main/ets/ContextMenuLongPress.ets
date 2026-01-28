@@ -228,7 +228,7 @@ export struct ContextMenuLongPress {
                 labelInfo: item.subtitle,
               })
                 .contentFont({
-                  family : this.menuFontName
+                  family: this.menuFontName
                 })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
@@ -268,7 +268,7 @@ export struct ContextMenuLongPress {
                 labelInfo: item.subtitle,
               })
                 .contentFont({
-                  family : this.menuFontName
+                  family: this.menuFontName
                 })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
@@ -310,7 +310,7 @@ export struct ContextMenuLongPress {
                 labelInfo: item.subtitle,
               })
                 .contentFont({
-                  family : this.menuFontName
+                  family: this.menuFontName
                 })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
@@ -349,7 +349,7 @@ export struct ContextMenuLongPress {
                 labelInfo: item.subtitle,
               })
                 .contentFont({
-                  family : this.menuFontName
+                  family: this.menuFontName
                 })
                 .selected(item.selected)
                 .selectIcon(new SymbolGlyphModifier($r('sys.symbol.checkmark')).fontSize('24vp'))
@@ -387,7 +387,7 @@ export struct ContextMenuLongPress {
       }.backgroundColor('white')
     }
     .onSizeChange((oldValue: SizeOptions, newValue: SizeOptions) => {
-      writeResult(newValue.width, newValue.height)
+      writeResult(newValue)
     })
     .onDisAppear(() => {
       this.menuCtx.rnInstance.postMessageToCpp('contextMenu::onCancel', {

@@ -1,6 +1,11 @@
 # Changelog
 
 ## 鸿蒙化Log
+### v1.19.1
+
+- release version 1.19.1
+- fix: 修复react-native-context-menu-view ArkUI 语法编译报错问题
+
 ### v1.19.1-rc.2
 
 - pre-release version 1.19.1-rc.2

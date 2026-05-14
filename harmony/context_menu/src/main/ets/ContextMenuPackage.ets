@@ -22,7 +22,8 @@
  * SOFTWARE.
  */
 
-import {RNPackage, TurboModulesFactory} from '@rnoh/react-native-openharmony/ts';
+import {TurboModulesFactory} from '@rnoh/react-native-openharmony/ts';
+import { RNOHPackage } from '@rnoh/react-native-openharmony';
 import type {TurboModule, TurboModuleContext} from '@rnoh/react-native-openharmony/ts';
 import { ContextMenuTurboModule } from './ContextMenuTurboModule';
 
@@ -40,7 +41,7 @@ class ContextMenuTurboModulesFactory extends TurboModulesFactory {
   }
 }
 
-export class ContextMenuPackage extends RNPackage {
+export class ContextMenuPackage extends RNOHPackage {
   createTurboModulesFactory(ctx: TurboModuleContext): TurboModulesFactory {
     return new ContextMenuTurboModulesFactory(ctx);
   }

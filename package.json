@@ -34,6 +34,12 @@
     "react-native": "*"
   },
   "harmony": {
-    "alias": "react-native-context-menu-view"
+    "alias": "react-native-context-menu-view",
+    "autolinking": {
+      "etsPackageClassName":"ContextMenuPackage",
+      "cppPackageClassName":"ContextMenuPackage",
+      "cmakeLibraryTargetName": "rnoh_context_menu", 
+      "ohPackageName": "@react-native-ohos/react-native-context-menu-view"
+    }
   }
 }

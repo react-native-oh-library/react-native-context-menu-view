@@ -4,9 +4,9 @@ This project is based on [react-native-context-menu-view@v1.19.0](https://github
 
 ## Documentation
 
-- [中文](https://gitee.com/react-native-oh-library/usage-docs/blob/master/zh-cn/react-native-context-menu-view.md)
+- [中文](https://gitcode.com/OpenHarmony-RN/usage-docs/blob/master/zh-cn/react-native-context-menu-view.md)
 
-- [English](https://gitee.com/react-native-oh-library/usage-docs/blob/master/en/react-native-context-menu-view.md)
+- [English](https://gitcode.com/OpenHarmony-RN/usage-docs/blob/master/en/react-native-context-menu-view.md)
 
 ## License
 

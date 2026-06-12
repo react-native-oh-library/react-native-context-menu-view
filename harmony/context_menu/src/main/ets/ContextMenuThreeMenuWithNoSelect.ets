@@ -93,7 +93,7 @@ export struct ContextMenuThreeMenuWithNoSelect {
     this.menuTag = this.menuTag;
     Logger.info('2024-3menu:' + JSON.stringify(this.longPress))
     //menu的大标题
-    this.listDate = this.longPress;
+    this.listDate = JSON.parse(JSON.stringify(this.longPress));
     Logger.info('2024-3menu,this.listDate:' + JSON.stringify(this.listDate))
     for (let i = 0; i < this.listDate.length; i++) {
       if (this.listDate[i] !== null && this.listDate[i] !== undefined) {

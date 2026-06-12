@@ -236,6 +236,9 @@ export struct ContextMenuLongPress {
                 .enabled(item.disabled)
                 .contentFontColor(item.titleColor)
                 .onClick(() => {
+                  // fix 二级菜单不能连续点击
+                  this.isTouch = false;
+                  this.isTouchWithNoSelect = false;
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
@@ -276,6 +279,9 @@ export struct ContextMenuLongPress {
                 .enabled(item.disabled)
                 .contentFontColor(item.titleColor)
                 .onClick(() => {
+                  // fix 二级菜单不能连续点击
+                  this.isTouch = false;
+                  this.isTouchWithNoSelect = false;
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
@@ -318,6 +324,9 @@ export struct ContextMenuLongPress {
                 .enabled(item.disabled)
                 .contentFontColor(item.titleColor)
                 .onClick(() => {
+                  // fix 二级菜单不能连续点击
+                  this.isTouch = false;
+                  this.isTouchWithNoSelect = false;
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);
@@ -357,6 +366,9 @@ export struct ContextMenuLongPress {
                 .enabled(item.disabled)
                 .contentFontColor(item.titleColor)
                 .onClick(() => {
+                  // fix 二级菜单不能连续点击
+                  this.isTouch = false;
+                  this.isTouchWithNoSelect = false;
                   //当item.inlineChildren默认为false,表示以二级目录展示
                   //true的时候,以同目录展示
                   this.isTouch = true && (!item.inlineChildren) && (item.d_childActions !== undefined);

@@ -169,6 +169,10 @@ export class ContextMenuTurboModule extends TurboModule {
             this.longPressTimestamp = e.timestamp / Math.pow(10, 6);
             this.longResult = this.longPressTimestamp - this.downTimestamp
             if (e.touchableViews[e.touchableViews.length-1] && !(e.dropdownMenuMode) && this.longResult >= 500) {
+              // fix 外层disabled不生效
+              if (e.disabled) {
+                return;
+              }
               //2024.12.06 fix：当处于多层嵌套外层情况下，tag值会错误
               this.realViewPoint.tag = e.rootTag;
               this.realViewPoint.x = e.touchableViews[e.touchableViews.length-1].x;
@@ -228,6 +232,10 @@ export class ContextMenuTurboModule extends TurboModule {
             //当点击外部的stack区域时候,获取的view只有两个，主屏幕和contextmenu容器,逻辑上是点击view才会触发menu
             // dropdownMenuMode-->true---->onTouch(),如果此时点击的事件大于500ms则不触发点击事件，如果小于500ms则触发点击效果
             if (e.touchableViews[e.touchableViews.length-1] && e.dropdownMenuMode && this.result < 500) {
+              // fix 外层disabled不生效
+              if (e.disabled) {
+                return;
+              }
               this.realViewPoint.tag = e.rootTag;
               this.realViewPoint.x = e.touchableViews[e.touchableViews.length-1].x;
               this.realViewPoint.y = e.touchableViews[e.touchableViews.length-1].y;
